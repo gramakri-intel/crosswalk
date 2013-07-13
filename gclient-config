@@ -9,7 +9,7 @@ solutions = [
                     'src/third_party/WebKit/LayoutTests': None,
                     'src/third_party/hunspell_dictionaries': None,
                     'src/webkit/data/layout_tests/LayoutTests': None,
-                    'src/xwalk': 'ssh://git@github.com/otcshare/crosswalk.git'},
+                    'src/xwalk': 'ssh://git@github.com/gramakri-intel/crosswalk.git@removegclienthook'},
     'name': '28.0.1500.36',
     'url': 'http://src.chromium.org/svn/releases/28.0.1500.36'
   }
