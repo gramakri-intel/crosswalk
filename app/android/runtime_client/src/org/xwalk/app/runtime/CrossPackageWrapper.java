@@ -22,11 +22,21 @@ public abstract class CrossPackageWrapper {
             CrossPackageWrapperExceptionHandler handler, Class<?>... parameters) {
         mExceptionHandler = handler;
         try {
-            mLibCtx = ctx.createPackageContext(
-                    LIBRARY_APK_PACKAGE_NAME,
-                    Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY);
-            mTargetClass =
-                    mLibCtx.getClassLoader().loadClass(className);
+        	try {
+        		// first check if the app contains the runtime itself
+        		mLibCtx = ctx;
+        		mTargetClass = mLibCtx.getClassLoader().loadClass(className);
+        	} catch (Exception e) {
+        		// check the shared runtime
+        	}
+        	
+        	if (mTargetClass == null) {
+        		mLibCtx = ctx.createPackageContext(
+        				LIBRARY_APK_PACKAGE_NAME,
+        				Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY);
+        		mTargetClass =
+        				mLibCtx.getClassLoader().loadClass(className);
+        	}
             mCreator = mTargetClass.getConstructor(parameters);
         } catch (NameNotFoundException e) {
             handleException(e);
